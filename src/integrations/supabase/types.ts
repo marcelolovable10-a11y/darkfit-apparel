@@ -14,6 +14,76 @@ export type Database = {
   }
   public: {
     Tables: {
+      carrinho: {
+        Row: {
+          atualizado_em: string | null
+          criado_em: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      carrinho_itens: {
+        Row: {
+          carrinho_id: string
+          criado_em: string | null
+          id: string
+          produto_id: string
+          quantidade: number | null
+          variacao_id: string | null
+        }
+        Insert: {
+          carrinho_id: string
+          criado_em?: string | null
+          id?: string
+          produto_id: string
+          quantidade?: number | null
+          variacao_id?: string | null
+        }
+        Update: {
+          carrinho_id?: string
+          criado_em?: string | null
+          id?: string
+          produto_id?: string
+          quantidade?: number | null
+          variacao_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carrinho_itens_carrinho_id_fkey"
+            columns: ["carrinho_id"]
+            isOneToOne: false
+            referencedRelation: "carrinho"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carrinho_itens_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carrinho_itens_variacao_id_fkey"
+            columns: ["variacao_id"]
+            isOneToOne: false
+            referencedRelation: "variacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       categorias: {
         Row: {
           atualizado_em: string | null
