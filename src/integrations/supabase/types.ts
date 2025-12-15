@@ -108,6 +108,62 @@ export type Database = {
         }
         Relationships: []
       }
+      enderecos: {
+        Row: {
+          bairro: string
+          cep: string
+          cidade: string
+          complemento: string | null
+          criado_em: string | null
+          estado: string
+          id: string
+          nome_completo: string
+          numero: string
+          padrao: boolean | null
+          rua: string
+          telefone: string | null
+          user_id: string
+        }
+        Insert: {
+          bairro: string
+          cep: string
+          cidade: string
+          complemento?: string | null
+          criado_em?: string | null
+          estado: string
+          id?: string
+          nome_completo: string
+          numero: string
+          padrao?: boolean | null
+          rua: string
+          telefone?: string | null
+          user_id: string
+        }
+        Update: {
+          bairro?: string
+          cep?: string
+          cidade?: string
+          complemento?: string | null
+          criado_em?: string | null
+          estado?: string
+          id?: string
+          nome_completo?: string
+          numero?: string
+          padrao?: boolean | null
+          rua?: string
+          telefone?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enderecos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       imagens_produto: {
         Row: {
           criado_em: string | null
@@ -186,6 +242,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          atualizado_em: string | null
+          criado_em: string | null
+          id: string
+          nome: string | null
+          telefone: string | null
+        }
+        Insert: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id: string
+          nome?: string | null
+          telefone?: string | null
+        }
+        Update: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id?: string
+          nome?: string | null
+          telefone?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
