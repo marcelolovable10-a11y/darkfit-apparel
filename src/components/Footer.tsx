@@ -21,8 +21,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#" className="inline-block mb-6">
-              <span className="font-display text-3xl tracking-wider text-gradient">
-                PULSE FIT
+              <span className="font-display text-2xl tracking-wider text-gradient">
+                IMPÉRIO MUNDO FITNESS
               </span>
             </a>
             <p className="text-muted-foreground mb-6 max-w-sm">
@@ -87,7 +87,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © 2024 PULSE FIT. Todos os direitos reservados.
+            © 2024 Império Mundo Fitness. Todos os direitos reservados.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">

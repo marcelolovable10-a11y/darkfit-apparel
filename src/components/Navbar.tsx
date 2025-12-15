@@ -20,8 +20,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
-            <span className="font-display text-2xl tracking-wider text-gradient">
-              IMPÉRIO FIT
+            <span className="font-display text-xl tracking-wider text-gradient">
+              IMPÉRIO MUNDO FITNESS
             </span>
           </a>
 

@@ -57,8 +57,8 @@ const Admin = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-card border-r border-border p-6 flex flex-col">
         <div className="mb-8">
-          <h1 className="font-display text-2xl font-bold text-foreground">
-            IMPÉRIO<span className="text-primary">FIT</span>
+          <h1 className="font-display text-xl font-bold text-foreground">
+            IMPÉRIO<span className="text-primary"> MUNDO FITNESS</span>
           </h1>
           <p className="text-xs text-muted-foreground mt-1">Painel Admin</p>
         </div>
