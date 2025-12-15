@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -20,7 +21,7 @@ const Navbar = () => {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2">
             <span className="font-display text-2xl tracking-wider text-gradient">
-              PULSE FIT
+              IMPÉRIO FIT
             </span>
           </a>
 
@@ -45,6 +46,11 @@ const Navbar = () => {
                 0
               </span>
             </Button>
+            <Link to="/auth">
+              <Button variant="ghost" size="icon">
+                <User className="h-5 w-5" />
+              </Button>
+            </Link>
             <Button variant="hero" size="sm">
               Comprar Agora
             </Button>
