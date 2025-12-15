@@ -8,15 +8,15 @@ import {
   FolderTree,
   Settings, 
   LogOut,
-  TrendingUp,
-  DollarSign,
-  ShoppingBag,
-  UserCheck
+  ShoppingCart
 } from 'lucide-react';
 import ProductsTable from '@/components/admin/ProductsTable';
 import CategoriesTable from '@/components/admin/CategoriesTable';
+import OrdersTable from '@/components/admin/OrdersTable';
+import StoreSettingsForm from '@/components/admin/StoreSettingsForm';
+import DashboardStats from '@/components/admin/DashboardStats';
 
-type ActiveTab = 'dashboard' | 'produtos' | 'categorias' | 'config';
+type ActiveTab = 'dashboard' | 'produtos' | 'categorias' | 'pedidos' | 'config';
 
 const Admin = () => {
   const { user, loading, isAdmin, signOut } = useAuth();
@@ -44,17 +44,11 @@ const Admin = () => {
 
   if (!user) return null;
 
-  const stats = [
-    { label: 'Vendas Hoje', value: 'R$ 2.450', icon: DollarSign, change: '+12%' },
-    { label: 'Pedidos', value: '24', icon: ShoppingBag, change: '+8%' },
-    { label: 'Clientes', value: '156', icon: UserCheck, change: '+23%' },
-    { label: 'Crescimento', value: '18%', icon: TrendingUp, change: '+5%' },
-  ];
-
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', key: 'dashboard' as ActiveTab },
     { icon: Package, label: 'Produtos', key: 'produtos' as ActiveTab },
     { icon: FolderTree, label: 'Categorias', key: 'categorias' as ActiveTab },
+    { icon: ShoppingCart, label: 'Pedidos', key: 'pedidos' as ActiveTab },
     { icon: Settings, label: 'Configurações', key: 'config' as ActiveTab },
   ];
 
@@ -129,24 +123,7 @@ const Admin = () => {
               <h2 className="text-3xl font-bold text-foreground">Dashboard</h2>
               <p className="text-muted-foreground">Bem-vindo de volta!</p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <stat.icon className="text-primary" size={24} />
-                    </div>
-                    <span className="text-sm text-green-500 font-medium">{stat.change}</span>
-                  </div>
-                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+            <DashboardStats />
           </>
         )}
 
@@ -170,11 +147,24 @@ const Admin = () => {
           </>
         )}
 
+        {activeTab === 'pedidos' && (
+          <>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground">Pedidos</h2>
+              <p className="text-muted-foreground">Gerencie os pedidos da loja</p>
+            </div>
+            <OrdersTable />
+          </>
+        )}
+
         {activeTab === 'config' && (
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-foreground">Configurações</h2>
-            <p className="text-muted-foreground">Em breve...</p>
-          </div>
+          <>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground">Configurações</h2>
+              <p className="text-muted-foreground">Configure sua loja</p>
+            </div>
+            <StoreSettingsForm />
+          </>
         )}
       </main>
     </div>
