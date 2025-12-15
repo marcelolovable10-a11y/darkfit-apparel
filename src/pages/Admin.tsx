@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { 
   LayoutDashboard, 
   Package, 
-  Users, 
-  ShoppingCart, 
+  FolderTree,
   Settings, 
   LogOut,
   TrendingUp,
@@ -14,10 +13,15 @@ import {
   ShoppingBag,
   UserCheck
 } from 'lucide-react';
+import ProductsTable from '@/components/admin/ProductsTable';
+import CategoriesTable from '@/components/admin/CategoriesTable';
+
+type ActiveTab = 'dashboard' | 'produtos' | 'categorias' | 'config';
 
 const Admin = () => {
   const { user, loading, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
 
   useEffect(() => {
     if (!loading && !user) {
@@ -48,11 +52,10 @@ const Admin = () => {
   ];
 
   const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', active: true },
-    { icon: Package, label: 'Produtos', active: false },
-    { icon: ShoppingCart, label: 'Pedidos', active: false },
-    { icon: Users, label: 'Clientes', active: false },
-    { icon: Settings, label: 'Configurações', active: false },
+    { icon: LayoutDashboard, label: 'Dashboard', key: 'dashboard' as ActiveTab },
+    { icon: Package, label: 'Produtos', key: 'produtos' as ActiveTab },
+    { icon: FolderTree, label: 'Categorias', key: 'categorias' as ActiveTab },
+    { icon: Settings, label: 'Configurações', key: 'config' as ActiveTab },
   ];
 
   return (
@@ -69,9 +72,10 @@ const Admin = () => {
         <nav className="flex-1 space-y-2">
           {menuItems.map((item) => (
             <button
-              key={item.label}
+              key={item.key}
+              onClick={() => setActiveTab(item.key)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                item.active
+                activeTab === item.key
                   ? 'bg-primary/10 text-primary'
                   : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
               }`}
@@ -110,50 +114,68 @@ const Admin = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-foreground">Dashboard</h2>
-          <p className="text-muted-foreground">Bem-vindo de volta!</p>
-        </div>
-
+      <main className="flex-1 p-8 overflow-auto">
         {!isAdmin && (
           <div className="mb-6 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
             <p className="text-yellow-500 text-sm">
-              ⚠️ Você ainda não tem permissão de administrador. Solicite acesso ao suporte.
+              ⚠️ Você ainda não tem permissão de administrador. Algumas funções podem estar limitadas.
             </p>
           </div>
         )}
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 transition-colors"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <stat.icon className="text-primary" size={24} />
-                </div>
-                <span className="text-sm text-green-500 font-medium">{stat.change}</span>
-              </div>
-              <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+        {activeTab === 'dashboard' && (
+          <>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground">Dashboard</h2>
+              <p className="text-muted-foreground">Bem-vindo de volta!</p>
             </div>
-          ))}
-        </div>
 
-        {/* Placeholder Content */}
-        <div className="bg-card border border-border rounded-xl p-8 text-center">
-          <Package className="mx-auto text-muted-foreground mb-4" size={48} />
-          <h3 className="text-xl font-semibold text-foreground mb-2">
-            Gerencie seus produtos
-          </h3>
-          <p className="text-muted-foreground mb-4">
-            Adicione, edite e organize os produtos da sua loja fitness.
-          </p>
-          <Button variant="hero">Adicionar Produto</Button>
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 transition-colors"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <stat.icon className="text-primary" size={24} />
+                    </div>
+                    <span className="text-sm text-green-500 font-medium">{stat.change}</span>
+                  </div>
+                  <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {activeTab === 'produtos' && (
+          <>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground">Produtos</h2>
+              <p className="text-muted-foreground">Gerencie os produtos da loja</p>
+            </div>
+            <ProductsTable />
+          </>
+        )}
+
+        {activeTab === 'categorias' && (
+          <>
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-foreground">Categorias</h2>
+              <p className="text-muted-foreground">Organize seus produtos em categorias</p>
+            </div>
+            <CategoriesTable />
+          </>
+        )}
+
+        {activeTab === 'config' && (
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-foreground">Configurações</h2>
+            <p className="text-muted-foreground">Em breve...</p>
+          </div>
+        )}
       </main>
     </div>
   );
