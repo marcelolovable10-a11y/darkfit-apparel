@@ -108,6 +108,54 @@ export type Database = {
         }
         Relationships: []
       }
+      configuracoes_loja: {
+        Row: {
+          atualizado_em: string | null
+          banner_home_url: string | null
+          criado_em: string | null
+          email_contato: string | null
+          endereco_loja: string | null
+          facebook: string | null
+          horario_atendimento: string | null
+          id: string
+          instagram: string | null
+          logo_url: string | null
+          nome_loja: string | null
+          texto_whatsapp: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          atualizado_em?: string | null
+          banner_home_url?: string | null
+          criado_em?: string | null
+          email_contato?: string | null
+          endereco_loja?: string | null
+          facebook?: string | null
+          horario_atendimento?: string | null
+          id?: string
+          instagram?: string | null
+          logo_url?: string | null
+          nome_loja?: string | null
+          texto_whatsapp?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          atualizado_em?: string | null
+          banner_home_url?: string | null
+          criado_em?: string | null
+          email_contato?: string | null
+          endereco_loja?: string | null
+          facebook?: string | null
+          horario_atendimento?: string | null
+          id?: string
+          instagram?: string | null
+          logo_url?: string | null
+          nome_loja?: string | null
+          texto_whatsapp?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       enderecos: {
         Row: {
           bairro: string
@@ -192,6 +240,118 @@ export type Database = {
             columns: ["produto_id"]
             isOneToOne: false
             referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      itens_pedido: {
+        Row: {
+          criado_em: string | null
+          id: string
+          nome_produto: string
+          pedido_id: string
+          preco_unitario: number
+          produto_id: string | null
+          quantidade: number
+          variacao_id: string | null
+        }
+        Insert: {
+          criado_em?: string | null
+          id?: string
+          nome_produto: string
+          pedido_id: string
+          preco_unitario: number
+          produto_id?: string | null
+          quantidade: number
+          variacao_id?: string | null
+        }
+        Update: {
+          criado_em?: string | null
+          id?: string
+          nome_produto?: string
+          pedido_id?: string
+          preco_unitario?: number
+          produto_id?: string | null
+          quantidade?: number
+          variacao_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "itens_pedido_pedido_id_fkey"
+            columns: ["pedido_id"]
+            isOneToOne: false
+            referencedRelation: "pedidos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "itens_pedido_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "itens_pedido_variacao_id_fkey"
+            columns: ["variacao_id"]
+            isOneToOne: false
+            referencedRelation: "variacoes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pedidos: {
+        Row: {
+          atualizado_em: string | null
+          criado_em: string | null
+          endereco_id: string | null
+          id: string
+          metodo_pagamento: string | null
+          observacoes: string | null
+          status: string | null
+          user_id: string | null
+          valor_frete: number | null
+          valor_subtotal: number
+          valor_total: number
+        }
+        Insert: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          endereco_id?: string | null
+          id?: string
+          metodo_pagamento?: string | null
+          observacoes?: string | null
+          status?: string | null
+          user_id?: string | null
+          valor_frete?: number | null
+          valor_subtotal: number
+          valor_total: number
+        }
+        Update: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          endereco_id?: string | null
+          id?: string
+          metodo_pagamento?: string | null
+          observacoes?: string | null
+          status?: string | null
+          user_id?: string | null
+          valor_frete?: number | null
+          valor_subtotal?: number
+          valor_total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pedidos_endereco_id_fkey"
+            columns: ["endereco_id"]
+            isOneToOne: false
+            referencedRelation: "enderecos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pedidos_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
