@@ -14,6 +14,109 @@ export type Database = {
   }
   public: {
     Tables: {
+      categorias: {
+        Row: {
+          atualizado_em: string | null
+          criado_em: string | null
+          id: string
+          nome: string
+          slug: string
+        }
+        Insert: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id?: string
+          nome: string
+          slug: string
+        }
+        Update: {
+          atualizado_em?: string | null
+          criado_em?: string | null
+          id?: string
+          nome?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      imagens_produto: {
+        Row: {
+          criado_em: string | null
+          id: string
+          ordem: number | null
+          produto_id: string
+          url: string
+        }
+        Insert: {
+          criado_em?: string | null
+          id?: string
+          ordem?: number | null
+          produto_id: string
+          url: string
+        }
+        Update: {
+          criado_em?: string | null
+          id?: string
+          ordem?: number | null
+          produto_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "imagens_produto_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      produtos: {
+        Row: {
+          ativo: boolean | null
+          atualizado_em: string | null
+          categoria_id: string | null
+          criado_em: string | null
+          descricao: string | null
+          id: string
+          nome: string
+          preco: number
+          preco_promocional: number | null
+          sku: string | null
+        }
+        Insert: {
+          ativo?: boolean | null
+          atualizado_em?: string | null
+          categoria_id?: string | null
+          criado_em?: string | null
+          descricao?: string | null
+          id?: string
+          nome: string
+          preco: number
+          preco_promocional?: number | null
+          sku?: string | null
+        }
+        Update: {
+          ativo?: boolean | null
+          atualizado_em?: string | null
+          categoria_id?: string | null
+          criado_em?: string | null
+          descricao?: string | null
+          id?: string
+          nome?: string
+          preco?: number
+          preco_promocional?: number | null
+          sku?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "produtos_categoria_id_fkey"
+            columns: ["categoria_id"]
+            isOneToOne: false
+            referencedRelation: "categorias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -34,6 +137,41 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      variacoes: {
+        Row: {
+          cor: string | null
+          criado_em: string | null
+          estoque: number | null
+          id: string
+          produto_id: string
+          tamanho: string | null
+        }
+        Insert: {
+          cor?: string | null
+          criado_em?: string | null
+          estoque?: number | null
+          id?: string
+          produto_id: string
+          tamanho?: string | null
+        }
+        Update: {
+          cor?: string | null
+          criado_em?: string | null
+          estoque?: number | null
+          id?: string
+          produto_id?: string
+          tamanho?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "variacoes_produto_id_fkey"
+            columns: ["produto_id"]
+            isOneToOne: false
+            referencedRelation: "produtos"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
