@@ -29,7 +29,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-xl tracking-wider text-gradient">
+            <span className="font-display text-xl tracking-wider text-primary">
               IMPÉRIO MUNDO FITNESS
             </span>
           </Link>
